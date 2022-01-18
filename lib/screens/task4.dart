@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:esense_flutter/esense.dart';
 import 'package:flutter/material.dart';
+import 'package:stream_testing/widgets/reconnect_button.dart';
 
 import '../widgets/chart_legend.dart';
 import '../widgets/stream_chart.dart';
@@ -126,27 +127,5 @@ class _Task4State extends State<Task4> {
   void dispose() {
     ESenseManager().disconnect();
     super.dispose();
-  }
-}
-
-class ReconnectButton extends StatelessWidget {
-  const ReconnectButton(
-      {Key? key, required this.child, required this.onPressed})
-      : super(key: key);
-
-  final Widget child;
-  final void Function() onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        child,
-        ElevatedButton(
-          onPressed: onPressed,
-          child: const Text("Connect To eSense"),
-        )
-      ]),
-    );
   }
 }
