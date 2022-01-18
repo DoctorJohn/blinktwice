@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import './models/event_value.dart';
-import 'widgets/stream_line_chart.dart';
+import '../models/event_value.dart';
+import 'stream_line_chart.dart';
 
 class StreamChart<T> extends StatefulWidget {
   const StreamChart({

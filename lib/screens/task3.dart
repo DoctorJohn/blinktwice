@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../stream_chart/chart_legend.dart';
-import '../stream_chart/stream_chart.dart';
+import '../widgets/chart_legend.dart';
+import '../widgets/stream_chart.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 class Task3 extends StatelessWidget {

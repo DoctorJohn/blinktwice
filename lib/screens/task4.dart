@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:esense_flutter/esense.dart';
 import 'package:flutter/material.dart';
 
-import '../stream_chart/chart_legend.dart';
-import '../stream_chart/stream_chart.dart';
+import '../widgets/chart_legend.dart';
+import '../widgets/stream_chart.dart';
 
 class Task4 extends StatefulWidget {
   const Task4({Key? key, required this.title}) : super(key: key);

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import './widgets/task_button.dart';
-import '../tasks/task3.dart';
-import '../tasks/task4.dart';
+import '../widgets/task_button.dart';
+import './task3.dart';
+import './task4.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
