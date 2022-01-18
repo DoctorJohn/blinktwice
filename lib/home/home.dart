@@ -7,36 +7,26 @@ import '../tasks/task4.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  final Map<String, Widget> _screens = const {
-    "Aufgabe 3": Task3(title: "Aufgabe 3"),
-    "Aufagbe 4": Task4(title: "eSense Demo"),
-  };
-
-  List<Widget> _buildButtons() {
-    return _screens.entries
-        .map((e) => TaskButton(name: e.key, page: e.value))
-        .toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Flutter Workshop"),
+        title: const Text("Screen selection"),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.white, Colors.blueGrey.shade200],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: _buildButtons(),
-          ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            TaskButton(
+              name: "Phone sensors",
+              page: Task3(title: "Phone sensors"),
+            ),
+            SizedBox(height: 16),
+            TaskButton(
+              name: "Earable sensors",
+              page: Task4(title: "Earable sensors"),
+            ),
+          ],
         ),
       ),
     );
