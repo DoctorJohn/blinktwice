@@ -25,6 +25,12 @@ class _Task4State extends State<Task4> {
     _connectToESense();
   }
 
+  @override
+  void dispose() {
+    ESenseManager().disconnect();
+    super.dispose();
+  }
+
   Future<void> _connectToESense() async {
     await ESenseManager().disconnect();
     bool hasSuccessfulConneted = await ESenseManager().connect(_eSenseName);
@@ -121,11 +127,5 @@ class _Task4State extends State<Task4> {
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    ESenseManager().disconnect();
-    super.dispose();
   }
 }
