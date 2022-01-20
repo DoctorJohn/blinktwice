@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:esense_flutter/esense.dart';
 import 'package:flutter/material.dart';
+import 'package:stream_testing/models/motion_event.dart';
+import 'package:stream_testing/services/motion_manager.dart';
 import 'package:stream_testing/widgets/reconnect_button.dart';
 
 import '../widgets/chart_legend.dart';
@@ -101,6 +103,17 @@ class _Task4State extends State<Task4> {
                       ),
                     ),
                     const ChartLegend(label: "Gyro"),
+                    StreamBuilder<MotionEvent>(
+                        stream: MotionManager(
+                          sensorEventStream: ESenseManager().sensorEvents,
+                        ).motionEventStream,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Text(
+                                "Last gesture: ${snapshot.data?.kind} ${snapshot.data?.value}");
+                          }
+                          return const Text("No data");
+                        })
                   ],
                 );
               case ConnectionType.unknown:
