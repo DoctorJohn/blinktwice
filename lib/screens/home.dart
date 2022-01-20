@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/task_button.dart';
 import './task3.dart';
 import './task4.dart';
+import './calls.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -25,6 +26,11 @@ class HomeScreen extends StatelessWidget {
             TaskButton(
               name: "Earable sensors",
               page: Task4(title: "Earable sensors"),
+            ),
+            SizedBox(height: 16),
+            TaskButton(
+              name: "Test calls",
+              page: Calls(),
             ),
           ],
         ),
