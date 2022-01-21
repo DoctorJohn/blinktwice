@@ -62,8 +62,8 @@ class _Task4State extends State<Task4> {
 
   Future<void> _connectToESense() async {
     await ESenseManager().disconnect();
-    bool hasSuccessfulConneted = await ESenseManager().connect(_eSenseName);
-    print("hasSuccessfulConneted: $hasSuccessfulConneted");
+    bool hasSuccessfulConnected = await ESenseManager().connect(_eSenseName);
+    debugPrint("hasSuccessfulConnected: $hasSuccessfulConnected");
   }
 
   List<double> _handleAccel(SensorEvent event) {

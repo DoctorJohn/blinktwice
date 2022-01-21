@@ -12,15 +12,15 @@ class Calls extends StatelessWidget {
     const name = "Arbeit";
 
     CallKeep.didActivateAudioSession.listen((event) {
-      print("AUDIO START: $event");
+      debugPrint("AUDIO START: $event");
     });
 
     CallKeep.didDeactivateAudioSession.listen((event) {
-      print("AUDIO END: $event");
+      debugPrint("AUDIO END: $event");
     });
 
     CallKeep.performEndCallAction.listen((event) {
-      print("CALL END: $event");
+      debugPrint("CALL END: $event");
     });
 
     await CallKeep.displayIncomingCall(
