@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:stream_testing/models/motion_event.dart';
 import 'package:stream_testing/models/motion_kind.dart';
 import 'package:stream_testing/services/motion_detector.dart';
+import 'package:stream_testing/services/motion_manager.dart';
 import 'package:stream_testing/services/motion_recognizer.dart';
 import 'package:stream_testing/widgets/reconnect_button.dart';
 
@@ -31,12 +32,27 @@ class _HeadphoneSensorsScreenState extends State<HeadphoneSensorsScreen> {
   void initMotionRecognition() {
     ESenseManager().connectionEvents.listen((event) {
       if (event.type == ConnectionType.connected) {
-        MotionDetector detector = MotionDetector(
+        final detector = MotionDetector(
           sensorEventStream: ESenseManager().sensorEvents,
         );
-        MotionRecognizer(
+        final manager = MotionManager(
           motionEventStream: detector.motionEventStream,
-          rotationalPattern: [
+        );
+        manager.register(
+          pattern: [
+            MotionKind.pitchPlus,
+            MotionKind.pitchMinus,
+            MotionKind.pitchPlus,
+            MotionKind.pitchMinus,
+            MotionKind.rollMinus,
+            MotionKind.rollPlus,
+          ],
+          callback: () async {
+            debugPrint("CALLBACK CALLED!");
+          },
+        );
+        manager.register(
+          pattern: [
             MotionKind.rollMinus,
             MotionKind.rollPlus,
             MotionKind.rollMinus,

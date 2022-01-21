@@ -3,15 +3,18 @@ import 'package:stream_testing/models/motion_category.dart';
 import 'package:stream_testing/models/motion_event.dart';
 import 'package:stream_testing/models/motion_kind.dart';
 
+typedef MotionRecognizerCallback = Future<void> Function(
+    List<MotionKind> pattern);
+
 class MotionRecognizer {
   final Stream<MotionEvent> motionEventStream;
-  final List<MotionKind> rotationalPattern;
-  final AsyncCallback callback;
+  final List<MotionKind> pattern;
+  final MotionRecognizerCallback callback;
   final rotationalBuffer = List<MotionKind>.empty(growable: true);
 
   MotionRecognizer({
     required this.motionEventStream,
-    required this.rotationalPattern,
+    required this.pattern,
     required this.callback,
   }) {
     motionEventStream.listen(onData, cancelOnError: true);
@@ -23,7 +26,7 @@ class MotionRecognizer {
       return;
     }
 
-    if (event.kind != rotationalPattern[rotationalBuffer.length]) {
+    if (event.kind != pattern[rotationalBuffer.length]) {
       // The current motion does not match the pattern
       return;
     }
@@ -31,11 +34,15 @@ class MotionRecognizer {
     rotationalBuffer.add(event.kind);
     debugPrint("Pattern kept matching! $rotationalBuffer");
 
-    if (rotationalBuffer.length == rotationalPattern.length) {
+    if (rotationalBuffer.length == pattern.length) {
       // Full pattern matches
-      debugPrint("Full pattern matched! $rotationalPattern");
-      callback();
-      rotationalBuffer.clear();
+      debugPrint("Full pattern matched! $pattern");
+      callback(pattern);
+      reset();
     }
+  }
+
+  void reset() {
+    rotationalBuffer.clear();
   }
 }
