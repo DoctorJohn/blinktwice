@@ -3,15 +3,15 @@ import '../widgets/chart_legend.dart';
 import '../widgets/stream_chart.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
-class Task3 extends StatelessWidget {
-  const Task3({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+class PhoneSensorsScreen extends StatelessWidget {
+  const PhoneSensorsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(
+        title: const Text("Phone sensors"),
+      ),
       body: Column(
         children: [
           Expanded(

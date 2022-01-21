@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_callkeep/flutter_callkeep.dart';
 
-class Calls extends StatelessWidget {
-  const Calls({Key? key}) : super(key: key);
+class CallTestScreen extends StatelessWidget {
+  const CallTestScreen({Key? key}) : super(key: key);
 
   Future<void> displayIncomingCall(BuildContext context) async {
     await CallKeep.askForPermissionsIfNeeded(context);

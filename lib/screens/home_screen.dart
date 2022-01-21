@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/task_button.dart';
-import './task3.dart';
-import './task4.dart';
-import './calls.dart';
+import './phone_sensors_screen.dart';
+import './headphone_sensors_screen.dart';
+import './call_test_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,17 +20,17 @@ class HomeScreen extends StatelessWidget {
           children: const [
             TaskButton(
               name: "Phone sensors",
-              page: Task3(title: "Phone sensors"),
+              page: PhoneSensorsScreen(),
             ),
             SizedBox(height: 16),
             TaskButton(
-              name: "Earable sensors",
-              page: Task4(title: "Earable sensors"),
+              name: "Headphone sensors",
+              page: HeadphoneSensorsScreen(),
             ),
             SizedBox(height: 16),
             TaskButton(
               name: "Test calls",
-              page: Calls(),
+              page: CallTestScreen(),
             ),
           ],
         ),

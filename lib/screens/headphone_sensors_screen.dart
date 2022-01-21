@@ -11,16 +11,14 @@ import 'package:stream_testing/widgets/reconnect_button.dart';
 import '../widgets/chart_legend.dart';
 import '../widgets/stream_chart.dart';
 
-class Task4 extends StatefulWidget {
-  const Task4({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+class HeadphoneSensorsScreen extends StatefulWidget {
+  const HeadphoneSensorsScreen({Key? key}) : super(key: key);
 
   @override
-  _Task4State createState() => _Task4State();
+  _HeadphoneSensorsScreenState createState() => _HeadphoneSensorsScreenState();
 }
 
-class _Task4State extends State<Task4> {
+class _HeadphoneSensorsScreenState extends State<HeadphoneSensorsScreen> {
   final String _eSenseName = "eSense-0569";
 
   @override
@@ -94,7 +92,7 @@ class _Task4State extends State<Task4> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text("Headphone sensors"),
       ),
       body: StreamBuilder<ConnectionEvent>(
         stream: ESenseManager().connectionEvents,
