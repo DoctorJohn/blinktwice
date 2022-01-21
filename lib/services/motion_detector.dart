@@ -5,16 +5,16 @@ import 'package:stream_testing/models/motion_category.dart';
 import 'package:stream_testing/models/motion_event.dart';
 import 'package:stream_testing/models/motion_kind.dart';
 
-class MotionManager {
+class MotionDetector {
   final Stream<SensorEvent> sensorEventStream;
   late final Stream<MotionEvent> motionEventStream;
   final int accelerometerThreshold;
   final int gyroscopeThreshold;
 
-  MotionManager({
+  MotionDetector({
     required this.sensorEventStream,
     this.accelerometerThreshold = 6000,
-    this.gyroscopeThreshold = 5000,
+    this.gyroscopeThreshold = 6000,
   }) {
     StreamTransformer<SensorEvent, MotionEvent> transformer =
         StreamTransformer.fromHandlers(

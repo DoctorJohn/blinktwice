@@ -4,7 +4,7 @@ import 'package:esense_flutter/esense.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_testing/models/motion_event.dart';
 import 'package:stream_testing/models/motion_kind.dart';
-import 'package:stream_testing/services/motion_manager.dart';
+import 'package:stream_testing/services/motion_detector.dart';
 import 'package:stream_testing/services/motion_recognizer.dart';
 import 'package:stream_testing/widgets/reconnect_button.dart';
 
@@ -33,11 +33,11 @@ class _Task4State extends State<Task4> {
   void initMotionRecognition() {
     ESenseManager().connectionEvents.listen((event) {
       if (event.type == ConnectionType.connected) {
-        MotionManager manager = MotionManager(
+        MotionDetector detector = MotionDetector(
           sensorEventStream: ESenseManager().sensorEvents,
         );
         MotionRecognizer(
-          motionEventStream: manager.motionEventStream,
+          motionEventStream: detector.motionEventStream,
           rotationalPattern: [
             MotionKind.rollMinus,
             MotionKind.rollPlus,
@@ -131,7 +131,7 @@ class _Task4State extends State<Task4> {
                     ),
                     const ChartLegend(label: "Gyro"),
                     StreamBuilder<MotionEvent>(
-                        stream: MotionManager(
+                        stream: MotionDetector(
                           sensorEventStream: ESenseManager().sensorEvents,
                         ).motionEventStream,
                         builder: (context, snapshot) {
