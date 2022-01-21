@@ -1,10 +1,31 @@
 // https://en.wikipedia.org/wiki/Six_degrees_of_freedom
 
 enum MotionKind {
-  heave, // Accel X
-  surge, // Accel Y
-  sway, // Accel Z
-  yaw, // Gyro X
-  roll, // Gyro Y
-  pitch, // Gyro Z
+  // Translational envelopes
+
+  // Accel X
+  heavePlus,
+  heaveMinus,
+
+  // Accel Y
+  surgePlus,
+  surgeMinus,
+
+  // Accel Z
+  swayPlus,
+  swayMinus,
+
+  // Rotational envelopes
+
+  // Gyro X
+  yawPlus,
+  yawMinus,
+
+  // Gyro Y
+  rollPlus,
+  rollMinus,
+
+  // Gyro Z
+  pitchPlus,
+  pitchMinus,
 }

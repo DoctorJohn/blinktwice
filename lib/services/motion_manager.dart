@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:esense_flutter/esense.dart';
+import 'package:stream_testing/models/motion_category.dart';
 import 'package:stream_testing/models/motion_event.dart';
 import 'package:stream_testing/models/motion_kind.dart';
 
@@ -31,15 +32,27 @@ class MotionManager {
       int sway = data.accel![2];
 
       if (heave.abs() > accelerometerThreshold) {
-        sink.add(MotionEvent(MotionKind.heave, heave));
+        sink.add(MotionEvent(
+          heave.isNegative ? MotionKind.heaveMinus : MotionKind.heavePlus,
+          MotionCategory.translational,
+          heave,
+        ));
       }
 
       if (surge.abs() > accelerometerThreshold) {
-        sink.add(MotionEvent(MotionKind.surge, surge));
+        sink.add(MotionEvent(
+          sway.isNegative ? MotionKind.surgeMinus : MotionKind.surgePlus,
+          MotionCategory.translational,
+          surge,
+        ));
       }
 
       if (sway.abs() > accelerometerThreshold) {
-        sink.add(MotionEvent(MotionKind.sway, sway));
+        sink.add(MotionEvent(
+          sway.isNegative ? MotionKind.swayMinus : MotionKind.swayPlus,
+          MotionCategory.translational,
+          sway,
+        ));
       }
     }
 
@@ -49,15 +62,27 @@ class MotionManager {
       int pitch = data.gyro![2];
 
       if (yaw.abs() > gyroscopeThreshold) {
-        sink.add(MotionEvent(MotionKind.yaw, yaw));
+        sink.add(MotionEvent(
+          yaw.isNegative ? MotionKind.yawMinus : MotionKind.yawPlus,
+          MotionCategory.rotational,
+          yaw,
+        ));
       }
 
       if (roll.abs() > gyroscopeThreshold) {
-        sink.add(MotionEvent(MotionKind.roll, roll));
+        sink.add(MotionEvent(
+          roll.isNegative ? MotionKind.rollMinus : MotionKind.rollPlus,
+          MotionCategory.rotational,
+          roll,
+        ));
       }
 
       if (pitch.abs() > gyroscopeThreshold) {
-        sink.add(MotionEvent(MotionKind.pitch, pitch));
+        sink.add(MotionEvent(
+          pitch.isNegative ? MotionKind.pitchMinus : MotionKind.pitchPlus,
+          MotionCategory.rotational,
+          pitch,
+        ));
       }
     }
   }

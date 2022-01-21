@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:esense_flutter/esense.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_testing/models/motion_event.dart';
+import 'package:stream_testing/models/motion_kind.dart';
 import 'package:stream_testing/services/motion_manager.dart';
+import 'package:stream_testing/services/motion_recognizer.dart';
 import 'package:stream_testing/widgets/reconnect_button.dart';
 
 import '../widgets/chart_legend.dart';
@@ -25,6 +27,31 @@ class _Task4State extends State<Task4> {
   void initState() {
     super.initState();
     _connectToESense();
+    initMotionRecognition();
+  }
+
+  void initMotionRecognition() {
+    ESenseManager().connectionEvents.listen((event) {
+      if (event.type == ConnectionType.connected) {
+        MotionManager manager = MotionManager(
+          sensorEventStream: ESenseManager().sensorEvents,
+        );
+        MotionRecognizer(
+          motionEventStream: manager.motionEventStream,
+          rotationalPattern: [
+            MotionKind.rollMinus,
+            MotionKind.rollPlus,
+            MotionKind.rollMinus,
+            MotionKind.rollPlus,
+            MotionKind.pitchPlus,
+            MotionKind.pitchMinus,
+          ],
+          callback: () async {
+            debugPrint("CALLBACK CALLED!");
+          },
+        );
+      }
+    });
   }
 
   @override

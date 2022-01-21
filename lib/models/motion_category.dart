@@ -1,0 +1,4 @@
+enum MotionCategory {
+  translational,
+  rotational,
+}
