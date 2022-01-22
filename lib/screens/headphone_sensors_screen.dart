@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:esense_flutter/esense.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:stream_testing/models/motion_event.dart';
 import 'package:stream_testing/models/motion_kind.dart';
 import 'package:stream_testing/services/motion_detector.dart';
@@ -39,19 +40,6 @@ class _HeadphoneSensorsScreenState extends State<HeadphoneSensorsScreen> {
         );
         manager.register(
           pattern: [
-            MotionKind.pitchPlus,
-            MotionKind.pitchMinus,
-            MotionKind.pitchPlus,
-            MotionKind.pitchMinus,
-            MotionKind.rollMinus,
-            MotionKind.rollPlus,
-          ],
-          callback: () async {
-            debugPrint("CALLBACK 1 CALLED!");
-          },
-        );
-        manager.register(
-          pattern: [
             MotionKind.surgePlus,
             MotionKind.surgeMinus,
             MotionKind.swayMinus,
@@ -61,6 +49,10 @@ class _HeadphoneSensorsScreenState extends State<HeadphoneSensorsScreen> {
             debugPrint("CALLBACK 2 CALLED!");
           },
         );
+        manager.progressStream.listen((event) {
+          debugPrint("PROGRESS: $event");
+          Vibrate.vibrate();
+        });
       }
     });
   }
@@ -148,7 +140,8 @@ class _HeadphoneSensorsScreenState extends State<HeadphoneSensorsScreen> {
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             return Text(
-                                "Last gesture: ${snapshot.data?.kind} ${snapshot.data?.value}");
+                                "Last gesture: ${snapshot.data?.kind} ${snapshot
+                                    .data?.value}");
                           }
                           return const Text("No data");
                         })

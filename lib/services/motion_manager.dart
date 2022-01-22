@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:stream_testing/models/motion_event.dart';
 import 'package:stream_testing/models/motion_kind.dart';
@@ -6,6 +8,9 @@ import 'package:stream_testing/services/motion_recognizer.dart';
 class MotionManager {
   final recognizers = <List<MotionKind>, MotionRecognizer>{};
   final Stream<MotionEvent> motionEventStream;
+  final progressStreamController = StreamController<MotionKind>.broadcast();
+
+  Stream<MotionKind> get progressStream => progressStreamController.stream;
 
   MotionManager({required this.motionEventStream});
 
@@ -13,7 +18,7 @@ class MotionManager {
     required List<MotionKind> pattern,
     required AsyncCallback callback,
   }) {
-    wrappedCallback(pattern) async {
+    resetAndCallback(pattern) async {
       resetAll();
       callback();
     }
@@ -21,7 +26,8 @@ class MotionManager {
     final recognizer = MotionRecognizer(
       motionEventStream: motionEventStream,
       pattern: pattern,
-      callback: wrappedCallback,
+      callback: resetAndCallback,
+      progressCallback: reportProgress,
     );
 
     recognizers[pattern] = recognizer;
@@ -35,5 +41,9 @@ class MotionManager {
     for (final recognizer in recognizers.values) {
       recognizer.reset();
     }
+  }
+
+  Future<void> reportProgress(MotionKind match) async {
+    progressStreamController.add(match);
   }
 }
