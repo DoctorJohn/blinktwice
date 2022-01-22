@@ -52,7 +52,7 @@ class MotionDetector {
 
       if (surge.abs() > accelerometerThreshold) {
         sink.add(MotionEvent(
-          sway.isNegative ? MotionKind.surgeMinus : MotionKind.surgePlus,
+          surge.isNegative ? MotionKind.surgeMinus : MotionKind.surgePlus,
           MotionCategory.translational,
           surge,
         ));
