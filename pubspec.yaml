@@ -38,6 +38,7 @@ dependencies:
   sensors_plus: ^1.2.1
   esense_flutter: ^0.4.3
   flutter_callkeep: ^0.2.1
+  rxdart: ^0.27.3
 
 dev_dependencies:
   flutter_test:
