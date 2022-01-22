@@ -10,7 +10,7 @@ class TaskButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 60,
-      width: 180,
+      width: 240,
       child: ElevatedButton(
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(
