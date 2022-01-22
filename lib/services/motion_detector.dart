@@ -4,10 +4,12 @@ import 'package:esense_flutter/esense.dart';
 import 'package:stream_testing/models/motion_category.dart';
 import 'package:stream_testing/models/motion_event.dart';
 import 'package:stream_testing/models/motion_kind.dart';
+import 'package:rxdart/rxdart.dart';
 
 class MotionDetector {
-  final Stream<SensorEvent> sensorEventStream;
   late final Stream<MotionEvent> motionEventStream;
+  final Stream<SensorEvent> sensorEventStream;
+  final Duration translationalEventInterval;
   final int accelerometerThreshold;
   final int gyroscopeThreshold;
 
@@ -15,14 +17,23 @@ class MotionDetector {
     required this.sensorEventStream,
     this.accelerometerThreshold = 6000,
     this.gyroscopeThreshold = 6000,
+    this.translationalEventInterval = const Duration(seconds: 1),
   }) {
-    StreamTransformer<SensorEvent, MotionEvent> transformer =
-        StreamTransformer.fromHandlers(
+    final translationalEvents = sensorEventStream
+        .where(hasTranslationalData)
+        .debounceTime(translationalEventInterval);
+
+    final rotationalEvents = sensorEventStream.where(hasRotationalData);
+
+    final combinedEvents = translationalEvents.mergeWith([rotationalEvents]);
+
+    final transformer = StreamTransformer.fromHandlers(
       handleData: handleData,
       handleDone: handleDone,
       handleError: handleError,
     );
-    motionEventStream = sensorEventStream.transform(transformer);
+
+    motionEventStream = combinedEvents.transform(transformer);
   }
 
   void handleData(SensorEvent data, EventSink<MotionEvent> sink) {
@@ -97,5 +108,13 @@ class MotionDetector {
     EventSink<MotionEvent> sink,
   ) {
     sink.addError(obj, stackTrace);
+  }
+
+  bool hasTranslationalData(SensorEvent event) {
+    return event.accel != null;
+  }
+
+  bool hasRotationalData(SensorEvent event) {
+    return event.gyro != null;
   }
 }
