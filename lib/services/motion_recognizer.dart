@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:stream_testing/models/motion_category.dart';
 import 'package:stream_testing/models/motion_event.dart';
 import 'package:stream_testing/models/motion_kind.dart';
 
@@ -21,11 +20,6 @@ class MotionRecognizer {
   }
 
   void onData(MotionEvent event) {
-    if (event.category != MotionCategory.rotational) {
-      // Translational motions are not supported yet
-      return;
-    }
-
     if (event.kind != pattern[rotationalBuffer.length]) {
       // The current motion does not match the pattern
       return;

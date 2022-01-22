@@ -15,7 +15,7 @@ class MotionDetector {
 
   MotionDetector({
     required this.sensorEventStream,
-    this.accelerometerThreshold = 6000,
+    this.accelerometerThreshold = 5000,
     this.gyroscopeThreshold = 6000,
     this.translationalEventInterval = const Duration(seconds: 1),
   }) {

@@ -6,7 +6,6 @@ import 'package:stream_testing/models/motion_event.dart';
 import 'package:stream_testing/models/motion_kind.dart';
 import 'package:stream_testing/services/motion_detector.dart';
 import 'package:stream_testing/services/motion_manager.dart';
-import 'package:stream_testing/services/motion_recognizer.dart';
 import 'package:stream_testing/widgets/reconnect_button.dart';
 
 import '../widgets/chart_legend.dart';
@@ -48,20 +47,18 @@ class _HeadphoneSensorsScreenState extends State<HeadphoneSensorsScreen> {
             MotionKind.rollPlus,
           ],
           callback: () async {
-            debugPrint("CALLBACK CALLED!");
+            debugPrint("CALLBACK 1 CALLED!");
           },
         );
         manager.register(
           pattern: [
-            MotionKind.rollMinus,
-            MotionKind.rollPlus,
-            MotionKind.rollMinus,
-            MotionKind.rollPlus,
-            MotionKind.pitchPlus,
-            MotionKind.pitchMinus,
+            MotionKind.surgePlus,
+            MotionKind.surgeMinus,
+            MotionKind.swayMinus,
+            MotionKind.swayPlus,
           ],
           callback: () async {
-            debugPrint("CALLBACK CALLED!");
+            debugPrint("CALLBACK 2 CALLED!");
           },
         );
       }
