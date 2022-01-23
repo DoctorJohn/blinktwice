@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stream_testing/screens/main_screen.dart';
 
 import '../widgets/task_button.dart';
 import './phone_sensors_screen.dart';
@@ -31,6 +32,11 @@ class HomeScreen extends StatelessWidget {
             TaskButton(
               name: "Test calls",
               page: CallTestScreen(),
+            ),
+            SizedBox(height: 16),
+            TaskButton(
+              name: "Main",
+              page: MainScreen(),
             ),
           ],
         ),
