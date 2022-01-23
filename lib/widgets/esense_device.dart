@@ -62,29 +62,41 @@ class _ESenseDeviceState extends State<ESenseDevice> {
       stream: ESenseManager().connectionEvents,
       builder: (context, snapshot) {
         if (searching) {
-          return const IconButton(
-            icon: Icon(Icons.bluetooth_searching),
-            onPressed: null,
+          return const Switch(
+            value: true,
+            onChanged: null,
           );
         }
 
-        if (snapshot.hasData) {
-          switch (snapshot.data!.type) {
-            case ConnectionType.device_found:
-            case ConnectionType.connected:
-              return IconButton(
-                icon: const Icon(Icons.bluetooth_connected),
-                onPressed: disconnecting ? null : disconnect,
-              );
-            default:
-              break;
-          }
+        if (disconnecting) {
+          return const Switch(
+            value: false,
+            onChanged: null,
+          );
         }
 
-        return IconButton(
-          icon: const Icon(Icons.bluetooth_disabled),
-          onPressed: disconnecting ? null : connect,
-        );
+        if (!snapshot.hasData) {
+          return Switch(
+            value: false,
+            onChanged: (_) => connect(),
+          );
+        }
+
+        switch (snapshot.data!.type) {
+          case ConnectionType.device_found:
+          case ConnectionType.connected:
+            return Switch(
+              value: true,
+              onChanged: (_) => disconnect(),
+            );
+          case ConnectionType.unknown:
+          case ConnectionType.disconnected:
+          case ConnectionType.device_not_found:
+            return Switch(
+              value: false,
+              onChanged: (_) => connect(),
+            );
+        }
       },
     );
   }
