@@ -13,6 +13,7 @@ class ESenseDevice extends StatefulWidget {
 class _ESenseDeviceState extends State<ESenseDevice> {
   bool searching = false;
   bool disconnecting = false;
+  bool get loading => searching || disconnecting;
 
   @override
   Widget build(BuildContext context) {
@@ -61,24 +62,10 @@ class _ESenseDeviceState extends State<ESenseDevice> {
     return StreamBuilder<ConnectionEvent>(
       stream: ESenseManager().connectionEvents,
       builder: (context, snapshot) {
-        if (searching) {
-          return const Switch(
-            value: true,
-            onChanged: null,
-          );
-        }
-
-        if (disconnecting) {
-          return const Switch(
-            value: false,
-            onChanged: null,
-          );
-        }
-
         if (!snapshot.hasData) {
           return Switch(
             value: false,
-            onChanged: (_) => connect(),
+            onChanged: loading ? null : (_) => connect(),
           );
         }
 
@@ -87,14 +74,14 @@ class _ESenseDeviceState extends State<ESenseDevice> {
           case ConnectionType.connected:
             return Switch(
               value: true,
-              onChanged: (_) => disconnect(),
+              onChanged: loading ? null : (_) => disconnect(),
             );
           case ConnectionType.unknown:
           case ConnectionType.disconnected:
           case ConnectionType.device_not_found:
             return Switch(
               value: false,
-              onChanged: (_) => connect(),
+              onChanged: loading ? null : (_) => connect(),
             );
         }
       },
