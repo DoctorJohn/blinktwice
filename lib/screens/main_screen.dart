@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stream_testing/widgets/esense_device.dart';
+import 'package:stream_testing/widgets/device_card.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class _MainScreenState extends State<MainScreen> {
             padding: EdgeInsets.all(8.0),
             child: Text("Connection"),
           ),
-          ESenseDevice(deviceName: "eSense-0569"),
+          DeviceCard(deviceName: "eSense-0569"),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: Text("Gestures"),

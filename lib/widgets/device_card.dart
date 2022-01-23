@@ -1,16 +1,16 @@
 import 'package:esense_flutter/esense.dart';
 import 'package:flutter/material.dart';
 
-class ESenseDevice extends StatefulWidget {
+class DeviceCard extends StatefulWidget {
   final String deviceName;
 
-  const ESenseDevice({Key? key, required this.deviceName}) : super(key: key);
+  const DeviceCard({Key? key, required this.deviceName}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ESenseDeviceState();
+  State<StatefulWidget> createState() => _DeviceCardState();
 }
 
-class _ESenseDeviceState extends State<ESenseDevice> {
+class _DeviceCardState extends State<DeviceCard> {
   bool searching = false;
   bool disconnecting = false;
   bool get loading => searching || disconnecting;
