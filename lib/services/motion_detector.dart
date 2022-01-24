@@ -32,7 +32,11 @@ class MotionDetector {
     );
 
     final translationalStream = sensorEventStream
-        .throttleTime(translationalEventInterval)
+        .throttleTime(
+          translationalEventInterval,
+          leading: false,
+          trailing: true,
+        )
         .transform(translationalTransformer);
 
     final rotationalStream = sensorEventStream.transform(rotationalTransformer);
