@@ -41,6 +41,8 @@ class _HeadphoneSensorsScreenState extends State<HeadphoneSensorsScreen> {
         manager.register(
           pattern: [
             MotionKind.surgePlus,
+            MotionKind.surgePlus,
+            MotionKind.surgePlus,
             MotionKind.surgeMinus,
             MotionKind.swayMinus,
             MotionKind.swayPlus,

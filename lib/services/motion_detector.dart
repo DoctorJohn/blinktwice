@@ -19,24 +19,28 @@ class MotionDetector {
     this.gyroscopeThreshold = 6000,
     this.translationalEventInterval = const Duration(seconds: 1),
   }) {
-    final translationalEvents = sensorEventStream
-        .where(hasTranslationalData)
-        .debounceTime(translationalEventInterval);
-
-    final rotationalEvents = sensorEventStream.where(hasRotationalData);
-
-    final combinedEvents = translationalEvents.mergeWith([rotationalEvents]);
-
-    final transformer = StreamTransformer.fromHandlers(
-      handleData: handleData,
+    final translationalTransformer = StreamTransformer.fromHandlers(
+      handleData: handleTranslationalData,
       handleDone: handleDone,
       handleError: handleError,
     );
 
-    motionEventStream = combinedEvents.transform(transformer);
+    final rotationalTransformer = StreamTransformer.fromHandlers(
+      handleData: handleRotationalData,
+      handleDone: handleDone,
+      handleError: handleError,
+    );
+
+    final translationalStream = sensorEventStream
+        .throttleTime(translationalEventInterval)
+        .transform(translationalTransformer);
+
+    final rotationalStream = sensorEventStream.transform(rotationalTransformer);
+
+    motionEventStream = translationalStream.mergeWith([rotationalStream]);
   }
 
-  void handleData(SensorEvent data, EventSink<MotionEvent> sink) {
+  void handleTranslationalData(SensorEvent data, EventSink<MotionEvent> sink) {
     if (data.accel != null) {
       int heave = data.accel![0];
       int surge = data.accel![1];
@@ -66,7 +70,9 @@ class MotionDetector {
         ));
       }
     }
+  }
 
+  void handleRotationalData(SensorEvent data, EventSink<MotionEvent> sink) {
     if (data.gyro != null) {
       int yaw = data.gyro![0];
       int roll = data.gyro![1];
