@@ -5,6 +5,7 @@ import 'package:stream_testing/screens/gesture_creation_screen.dart';
 import 'package:stream_testing/screens/headphone_sensors_screen.dart';
 import 'package:stream_testing/screens/phone_sensors_screen.dart';
 import 'package:stream_testing/services/motion_manager.dart';
+import 'package:stream_testing/widgets/compatibility_card.dart';
 import 'package:stream_testing/widgets/device_card.dart';
 import 'package:stream_testing/widgets/gestures_card.dart';
 import 'package:stream_testing/widgets/permissions_card.dart';
@@ -42,14 +43,15 @@ class _MainScreenState extends State<MainScreen> {
         children: const [
           Padding(
             padding: EdgeInsets.all(8.0),
+            child: Text("Setup"),
+          ),
+          PermissionsCard(),
+          CompatibilityCard(),
+          Padding(
+            padding: EdgeInsets.all(8.0),
             child: Text("Connection"),
           ),
           DeviceCard(deviceName: "eSense-0569"),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text("Permissions"),
-          ),
-          PermissionsCard(),
           Padding(
             padding: EdgeInsets.all(8.0),
             child: Text("Gestures"),
