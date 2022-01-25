@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:stream_testing/models/gesture.dart';
+import 'package:flutter_chips_input/flutter_chips_input.dart';
+import 'package:stream_testing/models/motion_input.dart';
+import 'package:stream_testing/models/motion_kind.dart';
 
 class GestureCreationScreen extends StatefulWidget {
   const GestureCreationScreen({Key? key}) : super(key: key);
@@ -13,7 +16,7 @@ class _GestureCreationScreenState extends State<GestureCreationScreen> {
   final _formKey = GlobalKey<FormState>();
   final callerController = TextEditingController();
   final numberController = TextEditingController();
-  final gestureController = TextEditingController();
+  List<MotionKind> pattern = [];
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class _GestureCreationScreenState extends State<GestureCreationScreen> {
             final gesture = Gesture()
               ..caller = callerController.text
               ..number = numberController.text
-              ..gesture = gestureController.text;
+              ..gesture = pattern.map((e) => e.name).join(",");
             box.add(gesture);
             Navigator.of(context).pop();
           }
@@ -79,20 +82,35 @@ class _GestureCreationScreenState extends State<GestureCreationScreen> {
               return null;
             },
           ),
-          TextFormField(
-            controller: gestureController,
+          ChipsInput<MotionInput>(
             decoration: const InputDecoration(
               icon: Icon(Icons.gesture),
-              labelText: "Gesture",
+              labelText: "Pattern",
             ),
-            keyboardType: TextInputType.text,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Required";
-              }
-              return null;
+            findSuggestions: (query) => MotionKind.values
+                .where((e) => e.name.contains(query))
+                .map((e) => MotionInput(e))
+                .toList(),
+            chipBuilder: (context, state, motion) {
+              return InputChip(
+                label: Text(motion.kind.name),
+                onDeleted: () => state.deleteChip(motion),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              );
             },
-          ),
+            suggestionBuilder: (context, state, motion) {
+              return ListTile(
+                title: Text(motion.kind.name),
+                onTap: () => state.selectSuggestion(motion),
+              );
+            },
+            onChanged: (data) {
+              debugPrint("BANANA: $data");
+              setState((){
+                pattern = data.map((e) => e.kind).toList();
+              });
+            },
+          )
         ],
       ),
     );
