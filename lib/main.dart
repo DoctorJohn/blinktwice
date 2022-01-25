@@ -30,7 +30,7 @@ void main() async {
       final gestures = box.values;
 
       for (final gesture in gestures) {
-        final pattern = gesture.gesture!
+        final pattern = gesture.pattern!
             .split(",")
             .map((motionName) => MotionKind.values
                 .firstWhere((motionKind) => motionKind.name == motionName))

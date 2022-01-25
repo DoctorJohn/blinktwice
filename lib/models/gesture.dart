@@ -9,7 +9,7 @@ class Gesture extends HiveObject {
   String? number;
 
   @HiveField(2)
-  String? gesture;
+  String? pattern;
 }
 
 class GestureAdapter extends TypeAdapter<Gesture> {
@@ -21,13 +21,13 @@ class GestureAdapter extends TypeAdapter<Gesture> {
     return Gesture()
       ..caller = reader.read()
       ..number = reader.read()
-      ..gesture = reader.read();
+      ..pattern = reader.read();
   }
 
   @override
   void write(BinaryWriter writer, Gesture obj) {
     writer.write(obj.caller);
     writer.write(obj.number);
-    writer.write(obj.gesture);
+    writer.write(obj.pattern);
   }
 }

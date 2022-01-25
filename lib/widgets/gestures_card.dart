@@ -33,7 +33,7 @@ class _GesturesCardState extends State<GesturesCard> {
 
         return ListTile(
           title: Text("${gesture.caller!} (${gesture.number!})"),
-          subtitle: Text(gesture.gesture!),
+          subtitle: Text(gesture.pattern!),
           trailing: IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () => showDeleteConfirmationDialog(context, gesture),

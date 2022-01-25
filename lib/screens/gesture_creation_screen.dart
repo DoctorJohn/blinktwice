@@ -39,7 +39,7 @@ class _GestureCreationScreenState extends State<GestureCreationScreen> {
             final gesture = Gesture()
               ..caller = callerController.text
               ..number = numberController.text
-              ..gesture = pattern.map((e) => e.name).join(",");
+              ..pattern = pattern.map((e) => e.name).join(",");
             box.add(gesture);
             Navigator.of(context).pop();
           }
