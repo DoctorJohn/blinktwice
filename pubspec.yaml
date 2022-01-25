@@ -43,6 +43,7 @@ dependencies:
   hive: ^2.0.5
   hive_flutter: ^1.1.0
   flutter_chips_input: ^1.10.0
+  permission_handler: ^8.3.0
 
 dev_dependencies:
   flutter_test:
