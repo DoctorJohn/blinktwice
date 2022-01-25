@@ -1,31 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:flutter_callkeep/flutter_callkeep.dart';
+import 'package:stream_testing/services/calls.dart';
 
 class CallTestScreen extends StatelessWidget {
   const CallTestScreen({Key? key}) : super(key: key);
-
-  Future<void> displayIncomingCall(BuildContext context) async {
-    await CallKeep.askForPermissionsIfNeeded(context);
-    const callUUID = '0783a8e5-8353-4802-9448-c6211109af51';
-    const number = '+49 70 123 45 67';
-    const name = "Arbeit";
-
-    CallKeep.didActivateAudioSession.listen((event) {
-      debugPrint("AUDIO START: $event");
-    });
-
-    CallKeep.didDeactivateAudioSession.listen((event) {
-      debugPrint("AUDIO END: $event");
-    });
-
-    CallKeep.performEndCallAction.listen((event) {
-      debugPrint("CALL END: $event");
-    });
-
-    await CallKeep.displayIncomingCall(
-        callUUID, number, name, HandleType.number, false);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +15,10 @@ class CallTestScreen extends StatelessWidget {
           children: <Widget>[
             ElevatedButton(
               child: const Text('Display incoming call'),
-              onPressed: () => displayIncomingCall(context),
+              onPressed: () => displayIncomingCall(
+                "John Snow",
+                "+44 113 496 0000",
+              ),
             )
           ],
         ),

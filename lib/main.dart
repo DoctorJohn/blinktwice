@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:stream_testing/app.dart';
 import 'package:stream_testing/models/gesture.dart';
 import 'package:stream_testing/models/motion_kind.dart';
+import 'package:stream_testing/services/calls.dart';
 import 'package:stream_testing/services/motion_detector.dart';
 import 'package:stream_testing/services/motion_manager.dart';
 
@@ -39,7 +40,8 @@ void main() async {
         manager.register(
           pattern: pattern,
           callback: () async {
-            debugPrint("TIME TO CALL ${gesture.caller}");
+            debugPrint("CALLING ${gesture.caller}");
+            displayIncomingCall(gesture.number!, gesture.caller!);
           },
         );
 
