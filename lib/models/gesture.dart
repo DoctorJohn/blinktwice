@@ -18,10 +18,6 @@ class GestureAdapter extends TypeAdapter<Gesture> {
 
   @override
   Gesture read(BinaryReader reader) {
-    String caller = reader.read();
-    String number = reader.read();
-    String gesture = reader.read();
-
     return Gesture()
       ..caller = reader.read()
       ..number = reader.read()
